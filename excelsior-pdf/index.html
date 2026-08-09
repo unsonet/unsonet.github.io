@@ -7,343 +7,28 @@
     <title>Excelsior PDF</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
     <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.min.js"></script>
-    <script src="src/js/excelsior-pdf.umd.js"></script>
+    
+    <!-- <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.mjs"></script><!-- Uncaught SyntaxError: Cannot use 'import.meta' outside a module -->
+    <script>
+        globalThis['pdfjsDistLegacy'] = globalThis['pdfjsLib'];
+    </script>
+    <script type="module">
+        import * as pdfjsDistCurrent from 'https://esm.run/pdfjs-dist';
+        var isPdfjsLegacy = false;
+        globalThis['pdfjsLib'] = isPdfjsLegacy ? pdfjsDistLegacy : pdfjsDistCurrent;
+        globalThis['pdfjsWorkerSrc'] = isPdfjsLegacy ? 
+        'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.worker.min.js': 
+        'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.worker.min.mjs';
+
+        console.log(globalThis['pdfjsLib']);
+    </script>
+    <script src="./assets/js/excelsior-pdf-parser.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsnview/build/index.css" />
     <script src="https://cdn.jsdelivr.net/npm/jsnview/build/index.min.js"></script>
-    <script>
-        window.addEventListener("DOMContentLoaded", async function () {
-            var cache = {};
-            var fileInfo = document.querySelector(".file-info");
-            var fullPage = document.querySelector(".full-page");
-            var fileInput = document.querySelector('input[type="file"]');
-            var preview = document.querySelector('.preview');
-
-            var currentPage = 1;
-            var totalPages = 1;
-
-            let excelsiorPdf = window.ExcelsiorPDF.init({
-                pdfjs: pdfjsLib,
-                workerSrc: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.worker.min.js'
-            });
-            var excelsiorPdfResults;
-
-            //handle input change
-            fileInput.addEventListener("change", function (ev) {
-                getFileInfo();
-            });
-
-            //handle drag
-            document.addEventListener("dragover", function (ev) {
-                ev.preventDefault();
-                fullPage.style.display = "block";
-                fullPage.style.opacity = 1;
-            });
-
-            //handle drop
-            document.addEventListener("drop", function (ev) {
-                ev.preventDefault();
-                fullPage.style.opacity = 0;
-                fullPage.style.display = "none";
-                getFileInfo(ev);
-            });
-
-            // document.addEventListener("dragend", function (ev) {
-            //     ev.preventDefault();
-            //     fullPage.style.opacity = 0;
-            //     fullPage.style.display = "none";
-            // });
-
-            fullPage.addEventListener("dragleave", function (ev) {
-                ev.preventDefault();
-                fullPage.style.opacity = 0;
-                fullPage.style.display = "none";
-            });
-
-            function getFileInfo(ev) {
-                //chnage the var depending on the execution context
-                var input = ev ? ev.dataTransfer.files[0] : fileInput.files[0];
-                fileInfo.innerHTML = "File name: " + input.name + "<br>";
-                fileInfo.innerHTML += "File size: " + prettifyFileSize(input.size) + "<br>";
-                fileInfo.innerHTML += "File type: " + input.type.split("/")[1] + "<br>";
-                fileInfo.style.opacity = 1;
-            }
-
-            function prettifyFileSize(size) {
-                if (size < 1048576) {
-                    return (size / 1024).toFixed(2) + "KB";
-                } else if (size < 1073741824) {
-                    return (size / 1048576).toFixed(2) + "MB";
-                } else {
-                    return (size / 1073741824).toFixed(2) + "GB";
-                }
-            }
-
-
-            function handleFile(e) {
-                //jsonResultElement.textContent = 'Transfering file...';
-                var files = e.target.files;
-                var file = files[0];
-
-                console.log('file', file);
-
-                var reader = new FileReader();
-                var fileByteArray = [];
-                var name = file.name;
-                reader.onload = function (e) {
-                    //jsonResultElement.textContent = 'Parsing PDF...';
-                };
-                reader.readAsArrayBuffer(file);
-                reader.onloadend = async function (evt) {
-                    if (evt.target.readyState == FileReader.DONE) {
-                        var arrayBuffer = evt.target.result,
-                            array = new Uint8Array(arrayBuffer);
-                        for (var i = 0; i < array.length; i++) {
-                            fileByteArray.push(array[i]);
-                        }
-                    }
-
-
-                    await extractFile(fileByteArray);
-                }
-
-            }
-
-            fileInput.addEventListener('change', handleFile, false);
-
-            /**
-             * Updates the loading progress.
-             *
-             * @param {number} progress - value from 0 to 1, where 1 corresponds to 100% completion.
-             * @param {number} duration - animation time in milliseconds.
-             */
-            function updateProgress(progress, duration) {
-                progress = Math.min(Math.max(progress, 0), 1);
-                var loadingElem = document.getElementById('loading');
-                loadingElem.style.transition = 'width ' + duration + 'ms ease';
-                var targetPercentage = progress * 100;
-                loadingElem.style.width = targetPercentage + '%';
-            }
-
-            let firstPageTimestamp = null;
-
-            function onProgress(results) {
-                showLoading(true);
-                var progress = results.currentPage / results.numPages;
-                var currentTimestamp = Date.now();
-                var duration = 500;
-
-                if (results.currentPage === 1 || firstPageTimestamp == null) {
-                    firstPageTimestamp = currentTimestamp;
-                } else if (results.currentPage === 2 && firstPageTimestamp !== null) {
-                    duration = currentTimestamp - firstPageTimestamp;
-                }
-                updateProgress(progress, duration);
-            }
-
-
-            function onSuccess(results) {
-                console.log('results', results);
-                updateProgress(1, 500);
-                setTimeout(() => {
-                    showLoading(false);
-                    firstPageTimestamp = null;
-                }, 1);
-            }
-
-            function onError(error) {
-                console.error(error);
-                setTimeout(() => {
-                    showLoading(false);
-                    firstPageTimestamp = null;
-                }, 1);
-            }
-
-            function showLoading(enabled) {
-                if (enabled) {
-                    if (!preview.classList.contains('dim')) {
-                        preview.classList.add('dim');
-                    }
-                } else {
-                    if (preview.classList.contains('dim')) {
-                        preview.classList.remove('dim');
-                    }
-                }
-            }
-
-            async function extractFile(fileByteArray) {
-                try {
-                    updateProgress(0, 0);
-                    showLoading(true);
-                    let res = await excelsiorPdf.extractorRun({ dataArray: fileByteArray, onProgress, onSuccess, onError });
-                    excelsiorPdfResults = res
-                    currentPage = 1;
-                    totalPages = excelsiorPdfResults.extractorResults.numPages;
-                    await setPage(currentPage);
-                } catch (error) {
-                    onError(error);
-                }
-            }
-
-            function initCards() {
-                var cards = [...document.querySelector('.cards').querySelectorAll('.card')];
-                cards.forEach(card => {
-                    let id = card.dataset.id;
-                    let link = card.querySelector('a');
-
-                    let isCard = (card) => id && !card.classList.contains('more')
-
-                    if (isCard(card)) {
-                        let url = `./src/pdf/${id}.pdf`;//'https://camelot-py.readthedocs.io/en/master/_static/pdf/foo.pdf'
-                        if (!link.href) {
-                            link.href = url;
-                        }
-                        card.firstElementChild.onclick = async (e) => {
-
-                            let fileByteArray = await (await fetch(url)).arrayBuffer();
-                            await extractFile(fileByteArray);
-
-                            card.classList.add('selected');
-                            cards.forEach(c => {
-                                if (c != card) {
-                                    c.classList.remove('selected');
-                                }
-                            });
-                        };
-                    }
-                })
-            }
-
-
-            async function renderPage(pageNum) {
-                const pdf = excelsiorPdfResults.documentProxy;
-
-                // Load the first page.
-                const page = await pdf.getPage(pageNum);
-
-                const scale = 1;
-                const viewport = page.getViewport({ scale });
-
-                // Get the canvas element and set its size based on the PDF page.
-                const canvas = document.getElementById('pdf');
-                const context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                // Render the page into the canvas.
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport,
-                };
-                await page.render(renderContext).promise;
-                console.log('Page rendered!');
-            }
-
-            function setJSONTree(pageNum) {
-                // Default options
-                const options = {
-                    showLen: false,
-                    showType: false,
-                    showBrackets: true,
-                    showFoldmarker: false,
-                    colors: { boolean: '#ff2929', null: '#ff2929', string: '#690', number: '#905', float: '#002f99' }
-                }
-
-                let data = excelsiorPdfResults ? excelsiorPdfResults.extractorResults.pageTables[currentPage - 1].tableGroups.map(tableGroup => {
-                    return tableGroup.tableData.table.json;
-                }) : {};
-
-                const treeView = jsnview(data || {}, options); // returns HTMLElement
-
-                let jsonElement = document.querySelector('#tab-html ~ .tab .json');
-                jsonElement.innerHTML = '';
-                jsonElement.appendChild(treeView);
-            }
-
-            function setHTML(pageNum) {
-                let html = excelsiorPdfResults.extractorResults.pageTables[currentPage - 1].tableGroups.map(tableGroup => {
-                    return tableGroup.tableData.table.html
-                }).join('<br>');
-                let htmlElement = document.querySelector('#tab-html ~ .tab .html');
-                htmlElement.innerHTML = html;
-            }
-
-            async function setPage(pageNum) {
-                let currentPageCounter = document.querySelector('.current-page');
-                let totalPagesCounter = document.querySelector('.total-pages');
-
-                if ((pageNum <= +totalPages) && (pageNum >= 1)) {
-                    currentPageCounter.textContent = currentPage = pageNum;
-                    if (excelsiorPdfResults) {
-                        paginationButtonsHandler(pageNum)
-                        setJSONTree(currentPage);
-                        setHTML(pageNum);
-                        await renderPage(currentPage);
-                        let placeholder = document.querySelector('.preview-placeholder');
-                        let container = document.querySelector('.preview-container');
-                        if (!placeholder.classList.contains('hidden')) {
-                            placeholder.classList.add('hidden');
-                            container.classList.remove('hidden');
-                        }
-
-                    }
-                }
-                totalPagesCounter.textContent = totalPages;
-
-            }
-
-            function paginationButtonsHandler(pageNum) {
-                let prev = document.querySelector('.pagination .prev');
-                let next = document.querySelector('.pagination .next');
-                pageNum = pageNum || 1;
-                if ((pageNum <= totalPages) && (pageNum >= 1)) {
-                    if (pageNum == 1 && pageNum < totalPages) {
-                        prev.setAttribute('disabled', true);
-                        if (totalPages > 1) {
-                            next.removeAttribute('disabled');
-                        }
-                    } else if (pageNum == totalPages) {
-                        next.setAttribute('disabled', true);
-                        if (totalPages > 1) {
-                            prev.removeAttribute('disabled');
-                        } else {
-                            prev.setAttribute('disabled', true);
-                        }
-                    } else {
-                        prev.removeAttribute('disabled');
-                        next.removeAttribute('disabled');
-                    }
-                }
-            }
-
-            function initPagination() {
-                let prev = document.querySelector('.pagination .prev');
-                let next = document.querySelector('.pagination .next');
-
-                prev.onclick = async () => {
-                    let pageNum = currentPage - 1;
-                    paginationButtonsHandler(pageNum);
-                    await setPage(pageNum);
-                };
-                next.onclick = async () => {
-                    let pageNum = currentPage + 1;
-                    paginationButtonsHandler(pageNum);
-                    await setPage(pageNum);
-                };
-                paginationButtonsHandler(currentPage);
-            }
-
-            initCards();
-            setJSONTree();
-            initPagination();
-
-        });
-
-    </script>
-
-</head>
+<link rel="stylesheet" href="styles.63b5621abf63c8e3.css"></head>
 
 <body>
     <div class="logo-title-container">
@@ -363,10 +48,8 @@
                     </g>
                 </svg>
             </a>
-            <a class="soc-link" href="https://t.me/unsonet" target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 24 24" fill="rgb(51, 144, 236)">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.43 8.85893C11.2629 9.3444 8.93015 10.3492 5.43191 11.8733C4.86385 12.0992 4.56628 12.3202 4.53919 12.5363C4.4934 12.9015 4.95073 13.0453 5.57349 13.2411C5.6582 13.2678 5.74598 13.2954 5.83596 13.3246C6.44866 13.5238 7.27284 13.7568 7.70131 13.766C8.08996 13.7744 8.52375 13.6142 9.00266 13.2853C12.2712 11.079 13.9584 9.96381 14.0643 9.93977C14.1391 9.92281 14.2426 9.90148 14.3128 9.96385C14.3829 10.0262 14.3761 10.1443 14.3686 10.176C14.3233 10.3691 12.5281 12.0381 11.5991 12.9018C11.3095 13.171 11.1041 13.362 11.0621 13.4056C10.968 13.5034 10.8721 13.5958 10.78 13.6846C10.2108 14.2333 9.78393 14.6448 10.8036 15.3168C11.2937 15.6397 11.6858 15.9067 12.077 16.1731C12.5042 16.4641 12.9303 16.7543 13.4816 17.1157C13.6221 17.2078 13.7562 17.3034 13.8869 17.3965C14.3841 17.751 14.8308 18.0694 15.3826 18.0186C15.7033 17.9891 16.0345 17.6876 16.2027 16.7884C16.6002 14.6632 17.3816 10.0585 17.5622 8.16098C17.5781 7.99473 17.5582 7.78197 17.5422 7.68858C17.5262 7.59518 17.4928 7.46211 17.3714 7.3636C17.2276 7.24694 17.0057 7.22234 16.9064 7.22408C16.455 7.23204 15.7626 7.47282 12.43 8.85893Z"/>
-                </svg>
+            <a class="soc-link" href="https://www.patreon.com/cw/Unsonet" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 436 476" ><path d="M436 143c-.084-60.778-47.57-110.591-103.285-128.565C263.528-7.884 172.279-4.649 106.214 26.424 26.142 64.089.988 146.596.051 228.883c-.77 67.653 6.004 245.841 106.83 247.11 74.917.948 86.072-95.279 120.737-141.623 24.662-32.972 56.417-42.285 95.507-51.929C390.309 265.865 436.097 213.011 436 143Z"></path></svg>
             </a>
         </div>
 
@@ -448,6 +131,20 @@
                     </a>
                 </p>
             </div> <!-- .card -->
+            <div class="card" data-id="13-sample-tables-3">
+                <div>
+
+                </div>
+                <p>
+                    <span>13-sample-tables-3.pdf</span>
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5" />
+                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z" />
+                        </svg>
+                    </a>
+                </p>
+            </div> <!-- .card -->
             <div class="card more">
 
                 <a href="https://github.com/unsonet/excelsior-pdf/tree/main/public/src/pdf" target="_blank" rel="noopener noreferrer">
@@ -514,6 +211,6 @@
     </footer>
 
 
-</body>
+<script src="runtime.25b303e50953793c.js" type="module"></script><script src="styles.78c67086c99121f1.js" type="module"></script><script src="main.b14a30b2543718fd.js" type="module"></script></body>
 
 </html>
