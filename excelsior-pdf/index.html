@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><base href="./">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excelsior PDF</title>
@@ -9,7 +9,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.min.js"></script>
-    
+
     <!-- <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.mjs"></script><!-- Uncaught SyntaxError: Cannot use 'import.meta' outside a module -->
     <script>
         globalThis['pdfjsDistLegacy'] = globalThis['pdfjsLib'];
@@ -18,9 +18,9 @@
         import * as pdfjsDistCurrent from 'https://esm.run/pdfjs-dist';
         var isPdfjsLegacy = false;
         globalThis['pdfjsLib'] = isPdfjsLegacy ? pdfjsDistLegacy : pdfjsDistCurrent;
-        globalThis['pdfjsWorkerSrc'] = isPdfjsLegacy ? 
-        'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.worker.min.js': 
-        'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.worker.min.mjs';
+        globalThis['pdfjsWorkerSrc'] = isPdfjsLegacy ?
+            'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.worker.min.js' :
+            'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.worker.min.mjs';
 
         console.log(globalThis['pdfjsLib']);
     </script>
@@ -28,7 +28,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsnview/build/index.css" />
     <script src="https://cdn.jsdelivr.net/npm/jsnview/build/index.min.js"></script>
-<link rel="stylesheet" href="styles.63b5621abf63c8e3.css"></head>
+<link rel="stylesheet" href="styles.css"></head>
 
 <body>
     <div class="logo-title-container">
@@ -49,7 +49,9 @@
                 </svg>
             </a>
             <a class="soc-link" href="https://www.patreon.com/cw/Unsonet" target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 436 476" ><path d="M436 143c-.084-60.778-47.57-110.591-103.285-128.565C263.528-7.884 172.279-4.649 106.214 26.424 26.142 64.089.988 146.596.051 228.883c-.77 67.653 6.004 245.841 106.83 247.11 74.917.948 86.072-95.279 120.737-141.623 24.662-32.972 56.417-42.285 95.507-51.929C390.309 265.865 436.097 213.011 436 143Z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 436 476">
+                    <path d="M436 143c-.084-60.778-47.57-110.591-103.285-128.565C263.528-7.884 172.279-4.649 106.214 26.424 26.142 64.089.988 146.596.051 228.883c-.77 67.653 6.004 245.841 106.83 247.11 74.917.948 86.072-95.279 120.737-141.623 24.662-32.972 56.417-42.285 95.507-51.929C390.309 265.865 436.097 213.011 436 143Z"></path>
+                </svg>
             </a>
         </div>
 
@@ -89,12 +91,26 @@
                     </a>
                 </p>
             </div> <!-- .card -->
-            <div class="card" data-id="10-example">
+            <div class="card" data-id="07-multi-table">
                 <div>
 
                 </div>
                 <p>
-                    <span>10-example.pdf</span>
+                    <span>07-multi-table.pdf</span>
+                    <a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5" />
+                            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z" />
+                        </svg>
+                    </a>
+                </p>
+            </div> <!-- .card -->
+            <div class="card" data-id="08-camelot-example">
+                <div>
+
+                </div>
+                <p>
+                    <span>08-camelot-example.pdf</span>
                     <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5" />
@@ -117,12 +133,12 @@
                     </a>
                 </p>
             </div> <!-- .card -->
-            <div class="card" data-id="07-multi-table">
+            <div class="card" data-id="10-example">
                 <div>
 
                 </div>
                 <p>
-                    <span>07-multi-table.pdf</span>
+                    <span>10-example.pdf</span>
                     <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5" />
@@ -131,6 +147,7 @@
                     </a>
                 </p>
             </div> <!-- .card -->
+
             <div class="card" data-id="13-sample-tables-3">
                 <div>
 
@@ -183,22 +200,32 @@
                     </div>
                 </div>
             </div>
-            <div class="preview-render">
-                <div class="pagination">
-                    <button class="prev">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
-                            <path d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753" />
-                        </svg>
-                    </button>
-                    <span class="current-page">1</span>/<span class="total-pages">10</span>
-                    <button class="next">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
-                            <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753" />
-                        </svg>
-                    </button>
+
+            <div class="preview-viewer">
+                <div class="preview-toolbar">
+                    <div class="preview-pagination">
+                        <button class="prev">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
+                                <path d="M10 12.796V3.204L4.519 8zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753" />
+                            </svg>
+                        </button>
+                        <span class="current-page">1</span>/<span class="total-pages">10</span>
+                        <button class="next">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                <path d="M6 12.796V3.204L11.481 8zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <canvas id="pdf"></canvas>
+
+                <div class="preview-render">
+                    <div class="preview-pdf">
+                        <canvas id="pdf"></canvas>
+                    </div>
+
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -211,6 +238,6 @@
     </footer>
 
 
-<script src="runtime.25b303e50953793c.js" type="module"></script><script src="styles.78c67086c99121f1.js" type="module"></script><script src="main.f1ca405e89cf428f.js" type="module"></script></body>
+<script src="runtime.js" type="module"></script><script src="styles.js" type="module"></script><script src="main.js" type="module"></script></body>
 
 </html>
