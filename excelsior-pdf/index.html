@@ -9,22 +9,29 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- <link rel="stylesheet" href="styles.css"> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.min.js"></script> -->
-
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.mjs"></script><!-- Uncaught SyntaxError: Cannot use 'import.meta' outside a module -->
     <script>
         globalThis['pdfjsDistLegacy'] = globalThis['pdfjsLib'];
     </script>
     <script type="module">
-        import * as pdfjsDistCurrent from 'https://esm.run/pdfjs-dist';
-        var isPdfjsLegacy = false;
-        globalThis['pdfjsLib'] = isPdfjsLegacy ? pdfjsDistLegacy : pdfjsDistCurrent;
-        globalThis['pdfjsWorkerSrc'] = isPdfjsLegacy ?
-            'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/legacy/build/pdf.worker.min.js' :
-            'https://cdn.jsdelivr.net/npm/pdfjs-dist@latest/build/pdf.worker.min.mjs';
+    import * as pdfjsDistCurrent from 'https://esm.run/pdfjs-dist';
 
-        console.log(globalThis['pdfjsLib']);
-    </script>
+    var isPdfjsLegacy = false;
+
+    globalThis['pdfjsLib'] = isPdfjsLegacy
+        ? pdfjsDistLegacy
+        : pdfjsDistCurrent;
+
+        let version = pdfjsLib?.version || 'latest';
+
+    globalThis['pdfjsWorkerSrc'] = isPdfjsLegacy
+        ? (`https://cdn.jsdelivr.net/npm/pdfjs-dist@${version}/legacy/build/pdf.worker.min.js`)
+        : (`https://cdn.jsdelivr.net/npm/pdfjs-dist@${version}/build/pdf.worker.min.mjs`);
+
+    console.log(version);
+    console.log(pdfjsWorkerSrc);
+</script>
     <script src="./assets/js/excelsior-pdf-parser.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsnview/build/index.css" />
