@@ -177,6 +177,6 @@ All repositories published by Unsonet are distributed under the custom **UDGAF (
 
 The full license text, including its terms, restrictions, and list of excluded organizations, is available here:
 
-**[UDGAF License v1.1](https://github.com/unsonet/unsonet.github.io/udgaf_license.md)**
+**[UDGAF License v1.1](https://github.com/unsonet/unsonet.github.io/blob/main/udgaf_license.md)**
 
 This is a custom, non-standard license and is **not an OSI-approved open-source license**. Please review the applicable license before using, distributing, or modifying Unsonet software.
