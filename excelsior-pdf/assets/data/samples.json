@@ -21,6 +21,13 @@
     ]
   },
   {
+    "id": "column_span_1",
+    "url": [
+      "./assets/pdf/column_span_1.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/column_span_1.pdf"
+    ]
+  },
+  {
     "id": "column_span_2",
     "url": [
       "./assets/pdf/column_span_2.pdf",
@@ -41,7 +48,7 @@
       "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/m27.pdf"
     ]
   },
-   {
+  {
     "id": "population_growth",
     "url": [
       "./assets/pdf/population_growth.pdf",
