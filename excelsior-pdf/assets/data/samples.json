@@ -56,6 +56,13 @@
     ]
   },
   {
+    "id": "row_span",
+    "url": [
+      "./assets/pdf/row_span.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/row_span.pdf"
+    ]
+  },
+  {
     "id": "sales_invoice",
     "url": [
       "./assets/pdf/sales_invoice.pdf",
