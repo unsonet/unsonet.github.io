@@ -42,6 +42,13 @@
     ]
   },
   {
+    "id": "graphic_cyrl",
+    "url": [
+      "./assets/pdf/graphic_cyrl.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/graphic_cyrl.pdf"
+    ]
+  },
+  {
     "id": "m27",
     "url": [
       "./assets/pdf/m27.pdf",
