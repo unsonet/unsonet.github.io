@@ -70,6 +70,13 @@
     ]
   },
   {
+    "id": "health",
+    "url": [
+      "./assets/pdf/health.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/health.pdf"
+    ]
+  },
+  {
     "id": "m27",
     "url": [
       "./assets/pdf/m27.pdf",
