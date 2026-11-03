@@ -84,6 +84,13 @@
     ]
   },
   {
+    "id": "mexican_towns",
+    "url": [
+      "./assets/pdf/mexican_towns.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/mexican_towns.pdf"
+    ]
+  },
+  {
     "id": "missing_values",
     "url": [
       "./assets/pdf/missing_values.pdf",
