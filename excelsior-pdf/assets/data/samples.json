@@ -28,6 +28,13 @@
     ]
   },
   {
+    "id": "birdisland",
+    "url": [
+      "./assets/pdf/birdisland.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/birdisland.pdf"
+    ]
+  },
+  {
     "id": "budget",
     "url": [
       "./assets/pdf/budget.pdf",
