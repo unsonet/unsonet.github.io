@@ -63,6 +63,13 @@
     ]
   },
   {
+    "id": "fabre-prices",
+    "url": [
+      "./assets/pdf/fabre-prices.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/fabre-prices.pdf"
+    ]
+  },
+  {
     "id": "fpdf_example",
     "url": [
       "./assets/pdf/fpdf_example.pdf",
