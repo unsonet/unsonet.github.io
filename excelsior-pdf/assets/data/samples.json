@@ -194,5 +194,104 @@
       "./assets/pdf/watermark.pdf",
       "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/watermark.pdf"
     ]
+  },
+  {
+    "id": "jsPDF-AutoTable/borders",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/borders.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/borders.pdf"
+    ]
+  },
+  {
+    "id": "jsPDF-AutoTable/minimal",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/minimal.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/minimal.pdf"
+    ]
+  },
+  {
+    "id": "jsPDF-AutoTable/long",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/long.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/long.pdf"
+    ]
+  },
+  {
+    "id": "jsPDF-AutoTable/themes",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/themes.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/themes.pdf"
+    ]
+  },
+  {
+    "id": "jsPDF-AutoTable/defaults",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/defaults.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/defaults.pdf"
+    ]
+  },
+  {
+    "id": "jsPDF-AutoTable/basic",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/basic.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/basic.pdf"
+    ]
+  },
+  {
+    "id": "jsPDF-AutoTable/header-footer",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/header-footer.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/header-footer.pdf"
+    ]
+  },
+  {
+    "id": "jsPDF-AutoTable/custom",
+    "url": [
+      "./assets/pdf/jsPDF-AutoTable/custom.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/jsPDF-AutoTable/custom.pdf"
+    ]
+  },
+
+  {
+    "id": "tabula-java/20",
+    "url": [
+      "./assets/pdf/tabula-java/20.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/tabula-java/20.pdf"
+    ]
+  },
+  {
+    "id": "tabula-java/AnimalSounds",
+    "url": [
+      "./assets/pdf/tabula-java/AnimalSounds.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/tabula-java/AnimalSounds.pdf"
+    ]
+  },
+  {
+    "id": "tabula-java/AnimalSounds1",
+    "url": [
+      "./assets/pdf/tabula-java/AnimalSounds1.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/tabula-java/AnimalSounds1.pdf"
+    ]
+  },
+  {
+    "id": "tabula-java/arabic",
+    "url": [
+      "./assets/pdf/tabula-java/arabic.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/tabula-java/arabic.pdf"
+    ]
+  },
+  {
+    "id": "tabula-java/frx_2012_disclosure",
+    "url": [
+      "./assets/pdf/tabula-java/frx_2012_disclosure.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/tabula-java/frx_2012_disclosure.pdf"
+    ]
+  },
+  {
+    "id": "tabula-java/sort_exception",
+    "url": [
+      "./assets/pdf/tabula-java/sort_exception.pdf",
+      "https://raw.githubusercontent.com/unsonet/excelsior-pdf-demo/main/src/assets/pdf/tabula-java/sort_exception.pdf"
+    ]
   }
 ]
